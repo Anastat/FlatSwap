@@ -1,15 +1,19 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId, //primary key
+    email: String,
     firstName: String,
     lastName: String,
     passwordHash: String,
-    about: String,
-    email: String,
-    school: String,
-    profilePicture: Buffer,
-
+    about: {
+        type: String,
+        default: ''},
+    school: {
+        type: String,
+        default: ''},
+    profilePicture: {
+        type: Buffer,
+        default: ''}
 })
 
 userSchema.statics.format = (user) => {

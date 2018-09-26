@@ -4,7 +4,7 @@ import Notification from './Notification'
 
 class SignUp extends React.Component {
     constructor(props) {
-        super(props),
+        super(props)
         this.state = {
             email: '',
             firstName: '',

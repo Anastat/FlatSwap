@@ -2,26 +2,16 @@ const http = require('http')
 const bodyParser = require ('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const express = require('express');
-const path = require('path');
-const app = express();
+const express = require('express')
+const path = require('path')
+const app = express()
+const middleware = require('./server/utils/middleware')
 const userRouter = require('./server/controllers/users')
 const loginRouter = require('./server/controllers/login')
 
 if ( process.env.NODE_ENV !== 'production' ) {
   require('dotenv').config()
-}
-
-const port = process.env.PORT || 5000;
-const url = process.env.MONGODB_URI
-// API calls
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
-
-
-if (process.env.NODE_ENV === 'production') {
+} else if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
   // Handle React routing, return all requests to React app
@@ -30,23 +20,27 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-mongoose
-    .connect(url, { useNewUrlParser: true })
-    .then(() => {
-        console.log('connected to database', url)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+const port = process.env.PORT || 5000;
+const mongoUrl = process.env.MONGODB_URI
+
+
+
+mongoose.connect(mongoUrl, { useNewUrlParser: true })
+mongoose.Promise = global.Promise
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(middleware.logger)
+
+
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)
 
+app.use(middleware.error)
+
 const server = http.createServer(app)
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(port, () => console.log(`Listening on port ${port}`));
 
 server.on('close', () => {
   mongoose.connection.close()

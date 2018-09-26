@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && yarn start",
-    "server": "nodemon server.js",
+    "server": "nodemon server.js --ignore client",
     "lint": "node_modules/.bin/eslint .",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "dev:server": "cd client && yarn build && cd .. && yarn start",
