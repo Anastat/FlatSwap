@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header'
 import SearchDestination from './components/SearchDest'
 import Signup from './components/Signup'
+import Login from './components/Login'
 
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
         <Header/>
         <SearchDestination/>
         <Signup/>
+        <Login/>
       </div>
     );
   }

@@ -33,3 +33,4 @@ client/debug.log
 
 client/debug.log
 server/mongo.js
+*.log
