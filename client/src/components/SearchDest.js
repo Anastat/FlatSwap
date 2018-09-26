@@ -9,10 +9,9 @@ class SearchDest extends React.Component {
     render() {
         return (
             <div className="SearchDiv">
-                <h1>Welcome to the student 
-                    Flat Swap service</h1>
-                <div className = "SearchBar">
-                <form>
+                <h1>Welcome to the student Flat Swap service</h1>
+                <div>
+                <form className="SearchForm">
                     <input>
                     </input>
                     <input>

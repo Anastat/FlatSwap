@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header'
 import SearchDestination from './components/SearchDest'
+import Signup from './components/Signup'
+
 
 class App extends Component {
 	state = {
@@ -14,6 +16,7 @@ class App extends Component {
       <div>
         <Header/>
         <SearchDestination/>
+        <Signup/>
       </div>
     );
   }
