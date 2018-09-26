@@ -1,5 +1,5 @@
 import React from 'react'
-import signupService from './services/signup'
+import signupService from '../services/signup'
 import Notification from './Notification'
 
 class SignUp extends React.Component {
