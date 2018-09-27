@@ -117,6 +117,7 @@ handleLoginFieldChange = (event) => {
     return (
       <div>
         <Header/>
+
         <SearchDestination/>
         {this.state.user === null ? signupForm() : 
           <button onClick={this.logout}>Log out</button>
@@ -126,9 +127,8 @@ handleLoginFieldChange = (event) => {
             <p>{this.state.user.name} logged in</p>
           </div>
         }
-        
       </div>
-    );
+    )
   }
 }
 
