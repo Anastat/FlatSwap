@@ -7,8 +7,8 @@ import {
 	  HashRouter
 	} from "react-router-dom";
 import Host from "./Host";
-import Login from "./Login";
-import Signup from "./Signup";
+import Login from "./LoginForm";
+import Signup from "./SignupForm";
 import SearchDest from "./SearchDest";
 
 const Header = () => {

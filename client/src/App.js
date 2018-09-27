@@ -118,18 +118,21 @@ handleLoginFieldChange = (event) => {
       <div>
         <Header/>
 
-        <SearchDestination/>
-        {this.state.user === null ? signupForm() : 
-          <button onClick={this.logout}>Log out</button>
-        }
-        {this.state.user === null ? loginForm() : 
-          <div>
-            <p>{this.state.user.name} logged in</p>
-          </div>
-        }
+        
+        
       </div>
     )
   }
 }
 
 export default App;
+/*
+<SearchDestination/>
+{this.state.user === null ? signupForm() : 
+          <button onClick={this.logout}>Log out</button>
+        }
+        {this.state.user === null ? loginForm() : 
+          <div>
+            <p>{this.state.user.name} logged in</p>
+          </div>
+        }*/
