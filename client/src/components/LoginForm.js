@@ -20,7 +20,9 @@ class Login extends React.Component {
                 email: this.state.email,
                 password: this.state.password
             })
-            this.setState({email: '', password: ''})
+
+            window.localStorage.setItem('loggedUser', JSON.stringify(user))
+            this.setState({email: '', password: '', user})
         } catch (exeption) {
             this.setState({
                 error: 'email or password wrong'
