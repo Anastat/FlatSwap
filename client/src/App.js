@@ -16,9 +16,6 @@ class App extends Component {
     return (
       <div>
         <Header/>
-        <SearchDestination/>
-        <Signup/>
-        <Login/>
       </div>
     );
   }
