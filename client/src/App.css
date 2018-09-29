@@ -1,7 +1,5 @@
-html {
+html, body {
   height: 100%;
-}
-body {
   background-image: url('./images/architecture-buildings-city-313782.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -10,4 +8,14 @@ body {
 
 .header {
   padding: 2vh;
+}
+
+.SearchDiv {
+  width: 75%;
+  top: 50%;
+}
+.ui.inverted.segment, .ui.primary.inverted.segment {
+  width: 50%;
+    top: 50%;
+    margin: 10% 25%;
 }

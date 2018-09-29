@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import {
-  Route,
-  NavLink,
-  HashRouter
-} from "react-router-dom";
+import {Route, NavLink, HashRouter} from "react-router-dom";
+import {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
 import Host from "./components/Host";
 import Header from './components/Header'
 import logo from './images/flatSwap_logo.png'
@@ -25,6 +22,9 @@ class App extends Component {
     password: '',
     response: '',
     user: null,
+    loginFormVisible: false,
+    signupFormVisible: false,
+    destination: ''
  };
 
  componentDidMount() {
@@ -92,6 +92,10 @@ handleSignUpFieldChange = (event) => {
 handleLoginFieldChange = (event) => {
   this.setState({[event.target.name]: event.target.value})
 }
+
+handleSearchChange = (event) => {
+  this.setState({ destination: event.target.value });
+};
   
 
   render() {
@@ -150,7 +154,11 @@ handleLoginFieldChange = (event) => {
       
       </Menu>
 
-      <Route exact path="/" render={() => <SearchDestination />}/>
+      <Route exact path="/" render={() => 
+          <SearchDestination value={this.state.destination} 
+          handleChange={this.handleSearchChange}
+          onSubmit={this.logout}/>}/>
+          
       <Route path="/login" render={()=> loginForm()}/>
     <Route path="/signup" render={()=> signupForm()}/>
     <Route exact path="/hosting" component={Host}/>

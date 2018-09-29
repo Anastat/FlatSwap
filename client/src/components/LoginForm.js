@@ -6,7 +6,7 @@ import {Button, Segment, Form} from 'semantic-ui-react'
 
 const LoginForm =(props) => {
     return (
-        <Segment inverted>
+        <Segment inverted floated='right'>
             <Form onSubmit={props.handleSubmit} inverted>
                 <Notification message={props.error} />
                 <h2>Login</h2>
