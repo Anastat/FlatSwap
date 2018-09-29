@@ -3,6 +3,7 @@
 # dependencies
 node_modules
 
+
 # testing
 coverage
 
@@ -15,6 +16,7 @@ build
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 npm-debug.log*
 yarn-debug.log*
@@ -25,3 +27,12 @@ client/debug.log
 # heroku
 yarn.lock
 package-lock.json
+client/debug.log
+
+
+
+client/debug.log
+server/mongo.js
+*.log
+client/debug.log
+client/src/components/SideBar.js
