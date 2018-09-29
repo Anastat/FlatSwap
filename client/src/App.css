@@ -1,7 +1,13 @@
+html {
+  height: 100%;
+}
 body {
-  background-image: url('./images/backpack-1149462.jpg');
-  background-size: 100%;
+  background-image: url('./images/architecture-buildings-city-313782.jpg');
+  background-size: cover;
   background-repeat: no-repeat;
-  background-color: #EEEEEE;
+  /*background-color: #EEEEEE;*/
 }
 
+.header {
+  padding: 2vh;
+}

@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from "react-router-dom";
+import Host from "./components/Host";
 import Header from './components/Header'
+import logo from './images/flatSwap_logo.png'
 import SearchDestination from './components/SearchDest'
 import SignupForm from './components/SignupForm'
 import LoginForm from './components/LoginForm'
 import loginService from './services/login'
 import Togglable from './components/Togglable'
 import signupService from './services/signup'
+import {Menu, Image} from 'semantic-ui-react'
 
 
 class App extends Component {
@@ -89,7 +97,7 @@ handleLoginFieldChange = (event) => {
   render() {
 
     const loginForm =() => (
-      <Togglable buttonLabel='Login'>
+      
         <LoginForm 
           visible={this.state.visible}
           handleSubmit={this.login} 
@@ -97,11 +105,10 @@ handleLoginFieldChange = (event) => {
           email={this.state.email} 
           password={this.state.password} 
           error={this.state.error}/>
-      </Togglable>  
+      
     )
 
     const signupForm = () => (
-      <Togglable buttonLabel='Sign up'>
         <SignupForm
           visible={this.state.visible}
           handleSubmit={this.signUp}
@@ -112,27 +119,47 @@ handleLoginFieldChange = (event) => {
           password={this.state.password}
           error={this.state.error}
         />
-      </Togglable>
     )
     return (
       <div>
-        <Header/>
+        <HashRouter>
+      <div className='header'>
+        <Menu size='massive' secondary stackable inverted>
+        <Menu.Item>
+          <Image className="logo" src={logo}/>
+        </Menu.Item>
+        
+        <Menu.Menu position='right'>
+          <Menu.Item> <NavLink to='/'> Home</NavLink>
+         
+          </Menu.Item>
+          <Menu.Item as={NavLink} to="/hosting" name='host'>
+            Become a host
+          </Menu.Item>
+          
+            {this.state.user === null ? 
+            <Menu.Item as={NavLink} to="/signup"> Sign up</Menu.Item> : 
+            <Menu.Item as={NavLink} to='/' onClick={this.logout}>Log out </Menu.Item>}
+  
+             {this.state.user===null ? 
+             <Menu.Item as={NavLink} to="/login">Login</Menu.Item> : 
+             <Menu.Item> {this.state.user.name}</Menu.Item>} 
+          
+          
+        </Menu.Menu>
+      
+      </Menu>
 
-        
-        
+      <Route exact path="/" render={() => <SearchDestination />}/>
+      <Route path="/login" render={()=> loginForm()}/>
+    <Route path="/signup" render={()=> signupForm()}/>
+    <Route exact path="/hosting" component={Host}/>
+    </div>
+      </HashRouter>
       </div>
+      
     )
   }
 }
 
 export default App;
-/*
-<SearchDestination/>
-{this.state.user === null ? signupForm() : 
-          <button onClick={this.logout}>Log out</button>
-        }
-        {this.state.user === null ? loginForm() : 
-          <div>
-            <p>{this.state.user.name} logged in</p>
-          </div>
-        }*/

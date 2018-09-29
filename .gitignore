@@ -34,3 +34,5 @@ client/debug.log
 client/debug.log
 server/mongo.js
 *.log
+client/debug.log
+client/src/components/SideBar.js
