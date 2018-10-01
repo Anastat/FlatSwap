@@ -33,6 +33,7 @@ class Host extends React.Component {
 			
 		}
 		this._handleRadio = this._handleRadio.bind(this);
+		this.eligible = this.eligible.bind(this);
 	}
 	
 	isLoggedIn() {
@@ -52,8 +53,8 @@ class Host extends React.Component {
 		
 	}
 	
-	toggleHidden() {
-		this.setState({isHidden: !this.state.isHidden})
+	toggleHidden(ownership) {
+		this.setState({isHidden: ownership})
 	}
 	
 	
@@ -84,9 +85,8 @@ class Host extends React.Component {
     		const ownership = event.currentTarget.value === 'true' ? true: false;
             console.log('handle', ownership);
             this.setState({ ownership });
-            if (!ownership) {
-            	this.toggleHidden()
-            }
+            this.toggleHidden(ownership)
+            
     	} else if (event.currentTarget.name === 'permission') {
     		const permission = event.currentTarget.value === 'true' ? true: false;
             console.log('handle', permission);
@@ -109,6 +109,26 @@ class Host extends React.Component {
             </div>
     )
     }
+    eligible() {
+    	console.log("here")
+    	if (this.state.ownership || this.state.permission) {
+    		//need to make sure it sets state before calling renderinputfield
+    		this.setState({
+    			mode: "basicInfo"
+    		}, () => {
+    			console.log(this.state.mode)
+        		this.renderInputField()
+    		})
+    		
+    	} else {
+    		this.setState({
+    			mode: "notEligible"
+    		}, () => {
+    			console.log(this.state.mode)
+        		this.renderInputField()
+    		})
+    	}
+    }
     
     renderInputField() {
     	if (this.state.mode === "eligibility") {
@@ -118,7 +138,7 @@ class Host extends React.Component {
     	    return (
     	    		<div>
     	            <Notification message={this.state.error}/>
-    	            <form onSubmit = {this.host}>
+    	            
     	            <h2>Eligibility</h2>
     	            Do you own the apartment? 
     	            <label>		
@@ -128,10 +148,24 @@ class Host extends React.Component {
     	            <input type="radio" name="ownership" value="false" onChange={this._handleRadio}/>No 
     	            </label><br></br>
     	            {!this.state.isHidden && this.permissionField()}
-    	            <button type="submit">Next</button>
-    	            </form>
+    	            <button onClick={this.eligible}>Next</button>
+    	            
+    	            
     	            </div>	
     	    )
+    	} else if (this.state.mode === "basicInfo") {
+    		return (
+    				<div>
+    				<h2>Basic information</h2>
+    				</div>
+    		)
+    		
+    	} else if (this.state.mode === "notEligible") {
+    		return (
+    				<div>
+    				Please ask permission from your landlord before moving forward.
+    				</div>
+    		)
     	}
     }
     render () {
