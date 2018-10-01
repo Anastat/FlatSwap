@@ -8,6 +8,7 @@ const app = express()
 const middleware = require('./server/utils/middleware')
 const userRouter = require('./server/controllers/users')
 const loginRouter = require('./server/controllers/login')
+const hostsRouter = require('./server/controllers/hostRouter')
 
 if ( process.env.NODE_ENV !== 'production' ) {
   require('dotenv').config()
@@ -33,8 +34,9 @@ app.use(bodyParser.json())
 app.use(middleware.logger)
 
 
-app.use('/api/users', userRouter)
+app.use('/api/users', userRouter) //POST - save new user in data base GET - return list of users
 app.use('/api/login', loginRouter)
+app.use('/api/hosts', hostsRouter)
 
 app.use(middleware.error)
 

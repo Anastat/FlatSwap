@@ -9,15 +9,3 @@
     height: 70px;
     background-size: 100%;
   }
-  
-  ul{
-    list-style-type: none;
-    float: right;
-  }
-  
-  li{
-    display: inline-block;
-    color: white;
-    margin: 0 80px 0 0;
-  }
-  

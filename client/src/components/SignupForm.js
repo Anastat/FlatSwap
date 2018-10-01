@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Notification from './Notification'
-import {Form, Button, Menu, Segment} from 'semantic-ui-react'
+import {Form, Button, Segment} from 'semantic-ui-react'
 
 const SignupForm =(props) => {
         return (

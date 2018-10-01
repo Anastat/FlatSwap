@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Route, NavLink, HashRouter} from "react-router-dom";
-import {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
 import Host from "./components/Host";
 import Header from './components/Header'
 import logo from './images/flatSwap_logo.png'
@@ -12,6 +11,8 @@ import loginService from './services/login'
 import Togglable from './components/Togglable'
 import signupService from './services/signup'
 import {Menu, Image} from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom';
+import defaultAvatar from './images/user_icon.png' 
 
 
 class App extends Component {
@@ -21,10 +22,10 @@ class App extends Component {
     lastName: '',
     password: '',
     response: '',
-    user: null,
+    user: null, //user contains user.token and user object. Get user name = user.user.firstName
     loginFormVisible: false,
     signupFormVisible: false,
-    destination: ''
+    destination: '',
  };
 
  componentDidMount() {
@@ -32,7 +33,7 @@ class App extends Component {
   const loggedUserJSON = window.localStorage.getItem('loggedUser')
   if (loggedUserJSON) {
     const user = JSON.parse(loggedUserJSON)
-    this.setState({user})
+    this.setState({user: user})
   }
  }
 
@@ -47,7 +48,7 @@ class App extends Component {
       this.setState({email: '', password: '', user: user})
   } catch (exeption) {
       this.setState({
-          error: 'email or password wrong'
+          error: 'Email or password wrong'
       })
       setTimeout(() => {
           this.setState({error: null})
@@ -62,7 +63,8 @@ signUp = async (event) => {
           email: this.state.email,
           firstName: this.state.firstName,
           lastName: this.state.lastName,
-          password: this.state.password
+          password: this.state.password,
+          profilePicture: {defaultAvatar}
       })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       this.setState({
@@ -72,8 +74,9 @@ signUp = async (event) => {
           password: '', 
           user: user
       })
+      
   } catch (exeption) {
-      this.setState({error: 'something went wrong'})
+      this.setState({error: 'Something went wrong'})
       setTimeout(() => {
           this.setState({error: null})
       }, 5000)
@@ -147,7 +150,9 @@ handleSearchChange = (event) => {
   
              {this.state.user===null ? 
              <Menu.Item as={NavLink} to="/login">Login</Menu.Item> : 
-             <Menu.Item> {this.state.user.name}</Menu.Item>} 
+             <Menu.Item> <Image circular avatar user outline src={defaultAvatar}/>{this.state.user.user.firstName}
+             <Redirect to='/' /> 
+             </Menu.Item>} 
           
           
         </Menu.Menu>
@@ -171,3 +176,5 @@ handleSearchChange = (event) => {
 }
 
 export default App;
+
+/**/
