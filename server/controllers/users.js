@@ -12,7 +12,7 @@ usersRouter.post('/', async (request, response) => {
     try {
         const existingUser = await User.find({email: body.email})
         if (existingUser.length > 0) {
-            return response.status(400).json({error: 'email must be unique'})
+            return response.status(400).json({error: 'User with this email already exist'})
         }
 
         const saltRounds = 10
@@ -22,6 +22,7 @@ usersRouter.post('/', async (request, response) => {
             email: body.email,
             firstName: body.firstName,
             lastName: body.lastName,
+            profilePicture: Buffer('body.profilePicture'),
             passwordHash
         })
 
@@ -34,5 +35,28 @@ usersRouter.post('/', async (request, response) => {
     }
     
 })
+
+usersRouter.put('/:id', (response, request) => {
+    const body = response.body
+
+    const user = {
+        email: body.email,
+        firstName: body.firstName,
+        lastName: body.lastName,
+        country: body.country,
+        about: body.about,
+        school: body.school,
+        profilePicture: Buffer('body.profilePicture')
+    }
+    User
+        .findByIdAndUpdate(request.params.id, user, {new: true})
+        .then(updatedUser => {
+            response.json(User.format(updatedUser))
+        }) 
+        .catch(error => {
+            console.log(error)
+            response.status(400).send({ error: 'id wrong' })
+        })
+} )
 
 module.exports = usersRouter

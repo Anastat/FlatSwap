@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     passwordHash: String,
+    country: {
+        type: String,
+        default: ''
+    },
     about: {
         type: String,
         default: ''},
@@ -24,6 +28,7 @@ userSchema.statics.format = (user) => {
         email: user.email,
         about: user.about,
         school: user.school,
+        profilePicture: user.profilePicture
     }
 }
 
