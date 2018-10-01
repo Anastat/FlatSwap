@@ -27,6 +27,7 @@ class Host extends React.Component {
 			user: null,
 			ownership: false,
 			permission: false,
+			isHidden: true,
 			address: '',
 			
 			
@@ -49,6 +50,10 @@ class Host extends React.Component {
 		*/
 		return true
 		
+	}
+	
+	toggleHidden() {
+		this.setState({isHidden: !this.state.isHidden})
 	}
 	
 	
@@ -75,15 +80,41 @@ class Host extends React.Component {
     }
 
     _handleRadio(event) {
-        const ownership = event.currentTarget.value === 'true' ? true: false;
-        console.log('handle', ownership);
-        this.setState({ ownership });
+    	if (event.currentTarget.name === 'ownership') {
+    		const ownership = event.currentTarget.value === 'true' ? true: false;
+            console.log('handle', ownership);
+            this.setState({ ownership });
+            if (!ownership) {
+            	this.toggleHidden()
+            }
+    	} else if (event.currentTarget.name === 'permission') {
+    		const permission = event.currentTarget.value === 'true' ? true: false;
+            console.log('handle', permission);
+            this.setState({ permission });
+    	}
+        
+    }
+    permissionField() {
+    	const { permission } = this.state;
+	    console.log(permission, true);
+    	return (
+    		<div>
+            Do you have permission to sublet the apartment/room? 
+    	            <label>		
+    	            <input type="radio" name="permission" value="true" checked={permission === true} onChange={this._handleRadio} />Yes 
+    	            </label>
+    	            <label>
+    	            <input type="radio" name="permission" value="false" onChange={this._handleRadio}/>No 
+    	            </label><br></br>
+            </div>
+    )
     }
     
     renderInputField() {
     	if (this.state.mode === "eligibility") {
     		const { ownership } = this.state;
     	    console.log(ownership, true);
+    	    
     	    return (
     	    		<div>
     	            <Notification message={this.state.error}/>
@@ -95,7 +126,8 @@ class Host extends React.Component {
     	            </label>
     	            <label>
     	            <input type="radio" name="ownership" value="false" onChange={this._handleRadio}/>No 
-    	            </label>
+    	            </label><br></br>
+    	            {!this.state.isHidden && this.permissionField()}
     	            <button type="submit">Next</button>
     	            </form>
     	            </div>	
@@ -121,4 +153,5 @@ class Host extends React.Component {
         
     }
 }
+ 
 export default Host
