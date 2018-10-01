@@ -1,6 +1,7 @@
 import React from 'react'
 import hostService from '../services/host'
 import Notification from './Notification'
+import {Form, Button, Segment, Icon} from 'semantic-ui-react'
 
 //4 phases: 
 //actually first you need to make sure the person is logged in. "Please login or signup first"
@@ -25,12 +26,16 @@ class Host extends React.Component {
 			//Here all information needed of the flat
 			mode: "eligibility",
 			user: null,
-			ownership: false,
-			permission: false,
+			ownership: true,
+			permission: true,
 			isHidden: true,
+			hostName: '',
+			hostType: 'Apartment',
+			country: '',
+			town: '',
 			address: '',
-			
-			
+			description: '',
+			rooms: 1
 		}
 		this._handleRadio = this._handleRadio.bind(this);
 		this.eligible = this.eligible.bind(this);
@@ -76,7 +81,7 @@ class Host extends React.Component {
         }
     }
 
-    handleHostFieldChange = (event) => {
+    handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value})
     }
 
@@ -101,7 +106,7 @@ class Host extends React.Component {
     		<div>
             Do you have permission to sublet the apartment/room? 
     	            <label>		
-    	            <input type="radio" name="permission" value="true" checked={permission === true} onChange={this._handleRadio} />Yes 
+    	            <input type="radio" name="permission" value="true" checked={this.state.permission === true} onChange={this._handleRadio} />Yes 
     	            </label>
     	            <label>
     	            <input type="radio" name="permission" value="false" onChange={this._handleRadio}/>No 
@@ -156,7 +161,64 @@ class Host extends React.Component {
     	} else if (this.state.mode === "basicInfo") {
     		return (
     				<div>
+    				<Segment inverted>
+    				<Form onSubmit = {this.host} inverted>
     				<h2>Basic information</h2>
+                    <Notification message={this.state.error}/>
+                    <Form.Field>
+                        <label>Short description</label>
+                        <input type="text" 
+                        name="hostName"
+                        value={this.state.hostName} 
+                        onChange={this.handleChange}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Flat type</label>
+                        <label>		
+        	            <input type="radio" name="hostType" value="Apartment" checked={this.state.hostType === 'Apartment'} onChange={this.handleChange} />Apartment 
+        	            </label>
+        	            <label>
+        	            <input type="radio" name="hostType" value="Room" onChange={this.handleChange}/>Room
+        	            </label>
+                    </Form.Field>
+                    <Form.Group widths='equal'>
+                    <Form.Field>
+                        <label>Country</label>
+                        <input type="text" 
+                        name="country"
+                        value={this.state.country} 
+                        onChange={this.handleChange}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Town</label>
+                        <input type="text" 
+                        name="town"
+                        value={this.state.town} 
+                        onChange={this.handleChange}/>
+                    </Form.Field> 
+                        <Form.Field>
+                        <label>Address  <div class="tooltip"><Icon name='info' />
+                        <span class="tooltiptext">Only disclosed when the swap is confirmed</span>
+                        </div> </label>
+                        
+                        <input type="text" 
+                        name="address"
+                        value={this.state.address} 
+                        onChange={this.handleChange}/>
+                    </Form.Field>
+                    </Form.Group>
+                    <Form.TextArea label='Description' name='description' placeholder='Details about the flat or room' onChange={this.handleChange}/>
+                    <Form.Field>
+                        <label>Rooms</label>
+                        <input type="number" 
+                        name="rooms"
+                        min="1"
+                        value={this.state.rooms} 
+                        onChange={this.handleChange}/>
+                    </Form.Field>
+                    <Button type="submit">Start Hosting</Button>
+                    </Form>
+                    </Segment>
     				</div>
     		)
     		
