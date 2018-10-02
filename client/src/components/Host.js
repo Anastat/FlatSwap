@@ -63,15 +63,26 @@ class Host extends React.Component {
 	}
 	
 	
-	host = async (event) => {
+	handleSubmit = async (event) => {
         event.preventDefault()
         try {
             const flat = await hostService.host({
-                //info
-            	address: this.state.address,
+            	hostName: this.state.hostName,
+    			hostType: this.state.hostType,
+    			country: this.state.country,
+    			town: this.state.town,
+    			address: this.state.address,
+    			description: this.state.description,
+    			rooms: this.state.rooms
             })
             this.setState({
-                address: ''
+            	hostName: '',
+    			hostType: 'Apartment',
+    			country: '',
+    			town: '',
+    			address: '',
+    			description: '',
+    			rooms: 1
             })
         } catch (exeption) {
             this.setState({error: 'something went wrong'})
@@ -267,7 +278,7 @@ class Host extends React.Component {
                         value={this.state.rooms} 
                         onChange={this.handleChange}/>
                     </Form.Field>
-                    <Button type="submit">Start Hosting</Button>
+                    <Button type="submit" ocClick={this.handleSubmit}>Start Hosting</Button>
                     </Form>
                     </Segment>
                     </Grid.Column>
@@ -315,5 +326,6 @@ class Host extends React.Component {
         
     }
 }
- 
+
+
 export default Host
