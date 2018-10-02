@@ -169,7 +169,7 @@ handleSearchChange = (event) => {
       <Route path="/login" render={()=> loginForm()}/>
     <Route path="/signup" render={()=> signupForm()}/>
     <Route exact path="/hosting" render={({history}) =>
-    		<Host history={history} user={this.state.user}/>}
+    		<Host history={history} user={this.state.user} mode="eligibility"/>}
       />
     </div>
       </HashRouter>

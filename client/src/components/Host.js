@@ -39,12 +39,13 @@ const SignUpButton = () => (
 		</Button>
 	)} />
 )
+
 class Host extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state= {
 			//Here all information needed of the flat
-			mode: "eligibility",
+			mode: props.mode,
 			user: props.user,
 			ownership: true,
 			permission: true,
@@ -61,6 +62,15 @@ class Host extends React.Component {
 		this.eligible = this.eligible.bind(this);
 	}
 	
+	success() {
+		this.setState({
+			mode: "success"
+		}, () => {
+			console.log(this.state.mode)
+    		this.renderInputField()
+		})
+	}
+	
 	isLoggedIn() {
 		return (this.state.user !== null)
 	}
@@ -73,7 +83,7 @@ class Host extends React.Component {
 	handleSubmit = async (event) => {
         event.preventDefault()
         try {
-            const flat = await hostService.host({
+            const flat = await hostService.create({
             	hostName: this.state.hostName,
     			hostType: this.state.hostType,
     			country: this.state.country,
@@ -100,7 +110,11 @@ class Host extends React.Component {
     }
 
     handleChange = (event) => {
+    	const name = event.target.name
+    	const value = event.target.value
+    	console.log("event.target.name: ", name, " event.target.value: ", value)
         this.setState({[event.target.name]: event.target.value})
+        console.log(this.state.hostName, this.state.hostType, this.state.country, this.state.description)
     }
 
     _handleRadio(event) {
@@ -281,7 +295,9 @@ class Host extends React.Component {
                         value={this.state.rooms} 
                         onChange={this.handleChange}/>
                     </Form.Field>
-                    <Button type="submit" >Start Hosting</Button>
+                    <Button type="submit">
+                    Start Hosting
+                    </Button>
                     </Form>
                     </Segment>
                     </Grid.Column>
@@ -292,9 +308,32 @@ class Host extends React.Component {
     	} else if (this.state.mode === "notEligible") {
     		return (
     				<div>
+    				<Grid style={{padding: '80px'}} centered columns={3}>
+    				<Grid.Column>
+    				<Segment className="snow-opacity">
+    				<div className="radio-question">
     				Please ask permission from your landlord before moving forward.
     				</div>
+    				</Segment>
+                    </Grid.Column>
+      			  </Grid>
+    				</div>
     		)
+    	} else if (this.state.mode === "success") {
+    		return (
+    				<div>
+    				<Grid style={{padding: '80px'}} centered columns={3}>
+    				<Grid.Column>
+    				<Segment className="snow-opacity">
+    				<div className="radio-question">
+    				Your apartment is now available to be swapped.
+    				</div>
+    				</Segment>
+                    </Grid.Column>
+      			  </Grid>
+    				</div>
+    		)
+    		
     	}
     }
     render () {
