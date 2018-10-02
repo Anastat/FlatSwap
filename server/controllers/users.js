@@ -22,7 +22,7 @@ usersRouter.post('/', async (request, response) => {
             email: body.email,
             firstName: body.firstName,
             lastName: body.lastName,
-            profilePicture: Buffer('body.profilePicture'),
+            //profilePicture: Buffer('body.profilePicture'),
             passwordHash
         })
 
@@ -46,7 +46,7 @@ usersRouter.put('/:id', (response, request) => {
         country: body.country,
         about: body.about,
         school: body.school,
-        profilePicture: Buffer('body.profilePicture')
+        //profilePicture: Buffer('body.profilePicture')
     }
     User
         .findByIdAndUpdate(request.params.id, user, {new: true})

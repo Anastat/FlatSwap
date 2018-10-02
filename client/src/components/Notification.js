@@ -1,13 +1,13 @@
 import React from 'react'
+import {Message} from 'semantic-ui-react'
 
 const Notification = ({message}) => {
     if (message === null) {
         return null
     }
     return (
-        <div className="error">
-            {message}
-        </div>
+        <Message floating content={message}/>
+     
     )
 }
 

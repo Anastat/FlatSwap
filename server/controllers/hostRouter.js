@@ -23,7 +23,7 @@ hostRouter.get('/:id', async (request, response) => {
 
 hostRouter.get('/find/:town', async (request, response) => {
     try {
-        const hosts = await Host.find({town: request.params.town})
+        const hosts = await Host.find({town: request.params.town}).collation( { locale: 'en', strength: 2 } ) //Case Insensitive find
 
         if (hosts) {
             response.json(hosts.map(Host.format))
