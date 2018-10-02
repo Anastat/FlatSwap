@@ -1,7 +1,7 @@
 import React from 'react'
 import hostService from '../services/host'
 import Notification from './Notification'
-import {Form, Button, Segment, Icon} from 'semantic-ui-react'
+import {Form, Button, Segment, Icon, Divider, Grid} from 'semantic-ui-react'
 
 //4 phases: 
 //actually first you need to make sure the person is logged in. "Please login or signup first"
@@ -104,13 +104,30 @@ class Host extends React.Component {
 	    console.log(permission, true);
     	return (
     		<div>
+    		<br></br>
+    		
+    		<div className="radio-question">
             Do you have permission to sublet the apartment/room? 
-    	            <label>		
-    	            <input type="radio" name="permission" value="true" checked={this.state.permission === true} onChange={this._handleRadio} />Yes 
-    	            </label>
-    	            <label>
-    	            <input type="radio" name="permission" value="false" onChange={this._handleRadio}/>No 
-    	            </label><br></br>
+    	    </div>
+            		
+    	            <input 
+    	            	type="radio" 
+    	            	id="radio3"
+    	    	        className="form-radio"
+    	            	name="permission" 
+    	            	value="true" 
+    	            	checked={this.state.permission === true} 
+    	            	onChange={this._handleRadio} />
+    	            <label htmlFor="radio3">Yes</label>
+    	            
+    	            <input 
+    	            	type="radio" 
+    	            	id="radio4"
+    	    	        className="form-radio"
+    	            	name="permission" 
+    	            	value="false" 
+    	            	onChange={this._handleRadio}/>
+    	            <label htmlFor="radio4">No</label>
             </div>
     )
     }
@@ -142,20 +159,46 @@ class Host extends React.Component {
     	    
     	    return (
     	    		<div>
+    	    		<Grid style={{padding: '80px'}} centered columns={3}>
+    				<Grid.Column>
+    				<Segment style={{width: '110%', background: 'rgba(255, 250, 250, 0.6)'}}>
     	            <Notification message={this.state.error}/>
-    	            
     	            <h2>Eligibility</h2>
-    	            Do you own the apartment? 
-    	            <label>		
-    	            <input type="radio" name="ownership" value="true" checked={ownership === true} onChange={this._handleRadio} />Yes 
-    	            </label>
-    	            <label>
-    	            <input type="radio" name="ownership" value="false" onChange={this._handleRadio}/>No 
-    	            </label><br></br>
+    	            <br></br>
+    	            <div className="radio-question">
+    	            Do you own the apartment?  
+    	    	    </div>
+    	            <input 
+    	            	type="radio" 
+    	            	id="radio1"
+    	            	className="form-radio"
+    	            	name="ownership" 
+    	            	value="true" 
+    	            	checked={ownership === true} 
+    	            	onChange={this._handleRadio} />
+    	            <label htmlFor="radio1">Yes</label>
+    	            
+    	            <input 
+    	            	type="radio" 
+    	            	id="radio2"
+    	            	className="form-radio"
+    	            	name="ownership" 
+    	            	value="false" 
+    	            	onChange={this._handleRadio}/>
+    	            <label htmlFor="radio2">No</label>
+    	            
     	            {!this.state.isHidden && this.permissionField()}
-    	            <button onClick={this.eligible}>Next</button>
     	            
-    	            
+    	            <br></br><br></br>
+    	            <Button animated onClick={this.eligible}>
+    	            <Button.Content visible>Next</Button.Content>
+    	            <Button.Content hidden>
+    	              <Icon name='arrow right' />
+    	            </Button.Content>
+    	          </Button>
+    	          </Segment>
+    	          </Grid.Column>
+    			  </Grid>
     	            </div>	
     	    )
     	} else if (this.state.mode === "basicInfo") {
@@ -175,10 +218,19 @@ class Host extends React.Component {
                     <Form.Field>
                         <label>Flat type</label>
                         <label>		
-        	            <input type="radio" name="hostType" value="Apartment" checked={this.state.hostType === 'Apartment'} onChange={this.handleChange} />Apartment 
+        	            <input 
+        	            	type="radio" 
+        	            	name="hostType" 
+        	            	value="Apartment" 
+        	            	checked={this.state.hostType === 'Apartment'} 
+        	            	onChange={this.handleChange} /> Apartment 
         	            </label>
         	            <label>
-        	            <input type="radio" name="hostType" value="Room" onChange={this.handleChange}/>Room
+        	            <input 
+        	            	type="radio" 
+        	            	name="hostType" 
+        	            	value="Room" 
+        	            	onChange={this.handleChange}/> Room
         	            </label>
                     </Form.Field>
                     <Form.Group widths='equal'>
@@ -197,10 +249,7 @@ class Host extends React.Component {
                         onChange={this.handleChange}/>
                     </Form.Field> 
                         <Form.Field>
-                        <label>Address  <div class="tooltip"><Icon name='info' />
-                        <span class="tooltiptext">Only disclosed when the swap is confirmed</span>
-                        </div> </label>
-                        
+                        <label>Address</label>
                         <input type="text" 
                         name="address"
                         value={this.state.address} 
@@ -241,9 +290,20 @@ class Host extends React.Component {
         )
     	} else {
     		return(
-    			<div>
-    			Please login or signup first
-    			</div>
+    				
+    				<Grid style={{paddingTop: '80px'}} centered columns={3}>
+    				<Grid.Column>
+    			    <Button primary fluid>
+    			      Login
+    			    </Button>
+    			    <Divider horizontal>Or</Divider>
+    			    <Button secondary fluid>
+    			      Sign Up
+    			    </Button>
+    			    </Grid.Column>
+    			  </Grid>
+    			  
+    			  
     		)
     	}
         
