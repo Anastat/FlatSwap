@@ -57,7 +57,7 @@ hostRouter.post('/', async (request, response) => {
             address: body.address,
             description: body.description,
             rooms: body.rooms,
-            hostImg: body.hostImg
+            //hostImg: body.hostImg
         })
         const savedHost = await host.save()
         response.json(Host.format(savedHost))

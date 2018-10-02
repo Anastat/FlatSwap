@@ -104,12 +104,6 @@ logout = () => {
   this.setState({user: null})
 } 
 
-toggleHeaderHidden () {
-  this.setState({
-    isHeaderHidden: !this.state.isHeaderHidden
-  })
-}
-
 handleSignUpFieldChange = (event) => {
   this.setState({[event.target.name]: event.target.value})
 }
@@ -152,9 +146,16 @@ handleSearchChange = (event) => {
 
     const searchDestination =() => (
       <SearchDestination value={this.state.destination} 
-      handleChange={this.handleSearchChange}
-      onSubmit={this.searchDest}
-      isHeaderHidden={this.state.isHeaderHidden}
+        handleChange={this.handleSearchChange}
+        onSubmit={this.searchDest}
+      />
+    )
+
+    const searchDisplay = () => (
+      <HostsDisplay listOfHosts={this.state.listFindHost}
+        onChange={this.handleSearchChange}
+        value={this.state.destination}
+        onSubmit={this.searchDest}
       />
     )
 
@@ -195,7 +196,7 @@ handleSearchChange = (event) => {
           <Route exact path="/" render={() => searchDestination()}/>         
           <Route path="/login" render={()=> loginForm()}/>
           <Route path="/signup" render={()=> signupForm()}/>
-          <Route path='/dispaySearch' render={() =><HostsDisplay listOfHosts={this.state.listFindHost}/>}/>
+          <Route path='/dispaySearch' render={() => searchDisplay()}/>
           <Route exact path="/hosting" component={Host}/>
         </div>
      

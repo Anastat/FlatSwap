@@ -6,12 +6,12 @@ import {Button, Segment, Form} from 'semantic-ui-react'
 
 const LoginForm =(props) => {
     return (
-        <Segment inverted floated='right'>
-            <Form onSubmit={props.handleSubmit} inverted>
+        <Segment>
+            <Form onSubmit={props.handleSubmit} >
                 <Notification message={props.error} />
                 <h2>Login</h2>
-                <Form.Input fluid label='Email' placeholder='smith@mail.com' type='email' name='email' value={props.email} onChange={props.handleChange}/>
-                <Form.Input fluid label='Password' placeholder='password'type='password' name='password' value={props.password} onChange={props.handleChange}/>
+                <Form.Input focus fluid label='Email' placeholder='smith@mail.com' type='email' name='email' value={props.email} onChange={props.handleChange}/>
+                <Form.Input focus fluid label='Password' placeholder='password'type='password' name='password' value={props.password} onChange={props.handleChange}/>
                 <Button type='submit'>Login</Button>
             </Form>
         </Segment>
