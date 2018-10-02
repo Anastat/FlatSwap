@@ -295,15 +295,17 @@ class Host extends React.Component {
     	} else {
     		return(
     				
-    				<Grid style={{paddingTop: '80px'}} centered columns={3}>
+    				<Grid style={{paddingTop: '80px'}} centered columns={5}>
     				<Grid.Column>
+    				<Segment style={{paddingTop: '60px', paddingBottom: '60px', width: '100%', background: 'rgba(255, 250, 250, 0.6)'}}>
     			    <Button primary fluid>
     			      Login
     			    </Button>
     			    <Divider horizontal>Or</Divider>
     			    <Button secondary fluid>
-    			      Sign Up
+    			      Sign Up First
     			    </Button>
+    			     </Segment>
     			    </Grid.Column>
     			  </Grid>
     			  
