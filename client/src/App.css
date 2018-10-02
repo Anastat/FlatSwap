@@ -79,3 +79,14 @@ label
 	font: 300 16px/1.7 'Open Sans', sans-serif;
 	color: #333;
 }
+.snow-opacity {
+	background: rgba(255, 250, 250, 0.6) !important;
+}
+.host-form {
+	width: 110% !important;
+}
+.login-or-signup{
+	paddingTop: 60px !important; 
+	paddingBottom: 60px !important;
+	width: 100% !important;
+}

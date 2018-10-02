@@ -2,7 +2,7 @@ import React from 'react'
 import hostService from '../services/host'
 import Notification from './Notification'
 import {Form, Button, Segment, Icon, Divider, Grid} from 'semantic-ui-react'
-
+import { Route } from 'react-router-dom'
 //4 phases: 
 //actually first you need to make sure the person is logged in. "Please login or signup first"
 //1: Do you own the apartment? If not, do you have owner's permission to sublet the apartment/room?
@@ -17,15 +17,35 @@ import {Form, Button, Segment, Icon, Divider, Grid} from 'semantic-ui-react'
 //   access to any other spaces? gym? sauna?
 //4: Overview
 //   confirmation
-
-
+const LoginButton = () => (
+	<Route render={({ history}) => (
+	    <Button
+	    	primary
+	    	fluid
+		    onClick={() => { history.push('/login') }}
+		>
+		Log in
+		</Button>
+	)} />
+)
+const SignUpButton = () => (
+	<Route render={({ history}) => (
+	    <Button
+	    	secondary
+	    	fluid
+		    onClick={() => { history.push('/signup') }}
+		>
+		Sign Up First
+		</Button>
+	)} />
+)
 class Host extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state= {
 			//Here all information needed of the flat
 			mode: "eligibility",
-			user: null,
+			user: props.user,
 			ownership: true,
 			permission: true,
 			isHidden: true,
@@ -42,20 +62,7 @@ class Host extends React.Component {
 	}
 	
 	isLoggedIn() {
-		
-		/*
-		const loggedUserJSON = window.localStorage.getItem('loggedUser')
-		if (loggedUserJSON) {
-		    const user = JSON.parse(loggedUserJSON)
-		    this.setState({user})
-		}
-		console.log(this.state.user)
-		console.log((this.state.user !== null))
-		
 		return (this.state.user !== null)
-		*/
-		return true
-		
 	}
 	
 	toggleHidden(ownership) {
@@ -97,49 +104,45 @@ class Host extends React.Component {
     }
 
     _handleRadio(event) {
-    	if (event.currentTarget.name === 'ownership') {
-    		const ownership = event.currentTarget.value === 'true' ? true: false;
-            console.log('handle', ownership);
-            this.setState({ ownership });
-            this.toggleHidden(ownership)
-            
-    	} else if (event.currentTarget.name === 'permission') {
-    		const permission = event.currentTarget.value === 'true' ? true: false;
-            console.log('handle', permission);
-            this.setState({ permission });
-    	}
-        
+    	const targetName = event.currentTarget.name
+    	const isTrue = event.currentTarget.value === 'true' ? true: false;
+    	this.setState({
+    		[event.target.name]: isTrue
+    		}, () => {
+    			console.log('handle', isTrue, 'target:', targetName, 'value:', );
+    			if (targetName === 'ownership') {
+    	            this.toggleHidden(this.state.ownership)
+    	    	}
+    		})
     }
     permissionField() {
     	const { permission } = this.state;
 	    console.log(permission, true);
     	return (
-    		<div>
+    	  <div>
     		<br></br>
-    		
     		<div className="radio-question">
             Do you have permission to sublet the apartment/room? 
     	    </div>
-            		
-    	            <input 
-    	            	type="radio" 
-    	            	id="radio3"
-    	    	        className="form-radio"
-    	            	name="permission" 
-    	            	value="true" 
-    	            	checked={this.state.permission === true} 
-    	            	onChange={this._handleRadio} />
-    	            <label htmlFor="radio3">Yes</label>
+            <input 
+    	            type="radio" 
+    	           	id="radio3"
+    	           	className="form-radio"
+    	           	name="permission" 
+    	           	value="true" 
+    	           	checked={this.state.permission === true} 
+    	           	onChange={this._handleRadio} />
+    	    <label htmlFor="radio3">Yes</label>
     	            
-    	            <input 
-    	            	type="radio" 
-    	            	id="radio4"
-    	    	        className="form-radio"
-    	            	name="permission" 
-    	            	value="false" 
-    	            	onChange={this._handleRadio}/>
-    	            <label htmlFor="radio4">No</label>
-            </div>
+    	    <input 
+    	           	type="radio" 
+    	           	id="radio4"
+    	   	        className="form-radio"
+    	           	name="permission" 
+    	           	value="false" 
+                	onChange={this._handleRadio}/>
+	        <label htmlFor="radio4">No</label>
+          </div>
     )
     }
     eligible() {
@@ -172,7 +175,7 @@ class Host extends React.Component {
     	    		<div>
     	    		<Grid style={{padding: '80px'}} centered columns={3}>
     				<Grid.Column>
-    				<Segment style={{width: '110%', background: 'rgba(255, 250, 250, 0.6)'}}>
+    				<Segment className="host-form snow-opacity">
     	            <Notification message={this.state.error}/>
     	            <h2>Eligibility</h2>
     	            <br></br>
@@ -217,8 +220,8 @@ class Host extends React.Component {
     				<div>
     				<Grid style={{padding: '80px'}} centered columns={2}>
     				<Grid.Column>
-    				<Segment style={{width: '110%', background: 'rgba(255, 250, 250, 0.6)'}}>
-    				<Form onSubmit = {this.host}>
+    				<Segment className="host-form snow-opacity">
+    				<Form onSubmit = {this.handleSubmit}>
     				<h2>Basic information</h2>
                     <Notification message={this.state.error}/>
                     <Form.Field>
@@ -278,7 +281,7 @@ class Host extends React.Component {
                         value={this.state.rooms} 
                         onChange={this.handleChange}/>
                     </Form.Field>
-                    <Button type="submit" ocClick={this.handleSubmit}>Start Hosting</Button>
+                    <Button type="submit" >Start Hosting</Button>
                     </Form>
                     </Segment>
                     </Grid.Column>
@@ -308,14 +311,10 @@ class Host extends React.Component {
     				
     				<Grid style={{paddingTop: '80px'}} centered columns={5}>
     				<Grid.Column>
-    				<Segment style={{paddingTop: '60px', paddingBottom: '60px', width: '100%', background: 'rgba(255, 250, 250, 0.6)'}}>
-    			    <Button primary fluid>
-    			      Login
-    			    </Button>
+    				<Segment className="login-or-signup snow-opacity" >
+    			    <LoginButton/>
     			    <Divider horizontal>Or</Divider>
-    			    <Button secondary fluid>
-    			      Sign Up First
-    			    </Button>
+    			    <SignUpButton/>
     			     </Segment>
     			    </Grid.Column>
     			  </Grid>
