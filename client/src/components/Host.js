@@ -204,8 +204,10 @@ class Host extends React.Component {
     	} else if (this.state.mode === "basicInfo") {
     		return (
     				<div>
-    				<Segment inverted>
-    				<Form onSubmit = {this.host} inverted>
+    				<Grid style={{padding: '80px'}} centered columns={2}>
+    				<Grid.Column>
+    				<Segment style={{width: '110%', background: 'rgba(255, 250, 250, 0.6)'}}>
+    				<Form onSubmit = {this.host}>
     				<h2>Basic information</h2>
                     <Notification message={this.state.error}/>
                     <Form.Field>
@@ -268,6 +270,8 @@ class Host extends React.Component {
                     <Button type="submit">Start Hosting</Button>
                     </Form>
                     </Segment>
+                    </Grid.Column>
+      			  </Grid>
     				</div>
     		)
     		
