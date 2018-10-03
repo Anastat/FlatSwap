@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Route, NavLink, HashRouter} from "react-router-dom";
-import {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
+import {Route, NavLink, withRouter} from "react-router-dom";
 import Host from "./components/Host";
 import Header from './components/Header'
 import logo from './images/flatSwap_logo.png'
@@ -9,9 +8,12 @@ import SearchDestination from './components/SearchDest'
 import SignupForm from './components/SignupForm'
 import LoginForm from './components/LoginForm'
 import loginService from './services/login'
-import Togglable from './components/Togglable'
+import hostsService from './services/host'
 import signupService from './services/signup'
 import {Menu, Image} from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom';
+import defaultAvatar from './images/user_icon.png' 
+import HostsDisplay from './components/HostsDisplay';
 
 
 class App extends Component {
@@ -21,33 +23,46 @@ class App extends Component {
     lastName: '',
     password: '',
     response: '',
-    user: null,
+    user: null, //user contains user.token and user object. Get user name = user.user.firstName
     loginFormVisible: false,
     signupFormVisible: false,
-    destination: ''
+    destination: '',
+    listFindHost: [], //list of hosts searched by user
+    isHeaderHidden: false,
  };
 
  componentDidMount() {
-
-  const loggedUserJSON = window.localStorage.getItem('loggedUser')
+const loggedUserJSON = window.localStorage.getItem('loggedUser')
   if (loggedUserJSON) {
     const user = JSON.parse(loggedUserJSON)
-    this.setState({user})
+    this.setState({user: user})
   }
+ }
+
+ searchDest = async (event) => {
+   event.preventDefault()
+   try {
+     const listOfHosts = await hostsService.getDestination(this.state.destination)
+     this.setState({destination: '', listFindHost: listOfHosts}) 
+     this.props.history.push('/dispaySearch')
+     
+   } catch (exeption){
+    console.log(exeption)
+   }
  }
 
  login = async (event) => {
   event.preventDefault()
   try {
       const user = await loginService.login({
-          email: this.state.email,
-          password: this.state.password
+          email: this.state.email.toLocaleLowerCase().trim(),
+          password: this.state.password,
       })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       this.setState({email: '', password: '', user: user})
   } catch (exeption) {
       this.setState({
-          error: 'email or password wrong'
+          error: 'Email or password wrong'
       })
       setTimeout(() => {
           this.setState({error: null})
@@ -58,29 +73,33 @@ class App extends Component {
 signUp = async (event) => {
   event.preventDefault()
   try {
-      const user = await signupService.signup({
-          email: this.state.email,
+      await signupService.signup({
+          email: this.state.email.toLocaleLowerCase().trim(),
           firstName: this.state.firstName,
           lastName: this.state.lastName,
-          password: this.state.password
+          password: this.state.password,
+          //profilePicture: {defaultAvatar}
       })
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
       this.setState({
           email: '',
           firstName: '',
           lastName: '',
           password: '', 
-          user: user
       })
+      this.setState({error: 'Please log in to continue'})
+      setTimeout(() => {
+          this.setState({error: null})
+      }, 5000)
+      this.props.history.push('/login')
   } catch (exeption) {
-      this.setState({error: 'something went wrong'})
+      this.setState({error: 'Something went wrong'})
       setTimeout(() => {
           this.setState({error: null})
       }, 5000)
   }
 }
 
-logout = (event) => {
+logout = () => {
   window.localStorage.clear()
   this.setState({user: null})
 } 
@@ -124,10 +143,27 @@ handleSearchChange = (event) => {
           error={this.state.error}
         />
     )
+
+    const searchDestination =() => (
+      <SearchDestination value={this.state.destination} 
+        handleChange={this.handleSearchChange}
+        onSubmit={this.searchDest}
+      />
+    )
+
+    const searchDisplay = () => (
+      <HostsDisplay listOfHosts={this.state.listFindHost}
+        onChange={this.handleSearchChange}
+        value={this.state.destination}
+        onSubmit={this.searchDest}
+      />
+    )
+
+   
     return (
       <div>
-        <HashRouter>
-      <div className='header'>
+      
+      <div className='content'>
         <Menu size='massive' secondary stackable inverted>
         <Menu.Item>
           <Image className="logo" src={logo}/>
@@ -147,27 +183,27 @@ handleSearchChange = (event) => {
   
              {this.state.user===null ? 
              <Menu.Item as={NavLink} to="/login">Login</Menu.Item> : 
-             <Menu.Item> {this.state.user.name}</Menu.Item>} 
+             <Menu.Item> <Image circular avatar user outline src={defaultAvatar}/>{this.state.user.user.firstName}
+             <Redirect to='/' /> 
+             </Menu.Item>} 
           
           
         </Menu.Menu>
       
       </Menu>
+        
 
-      <Route exact path="/" render={() => 
-          <SearchDestination value={this.state.destination} 
-          handleChange={this.handleSearchChange}
-          onSubmit={this.logout}/>}/>
-          
-      <Route path="/login" render={()=> loginForm()}/>
-    <Route path="/signup" render={()=> signupForm()}/>
-    <Route exact path="/hosting" component={Host}/>
-    </div>
-      </HashRouter>
+          <Route exact path="/" render={() => searchDestination()}/>         
+          <Route path="/login" render={()=> loginForm()}/>
+          <Route path="/signup" render={()=> signupForm()}/>
+          <Route path='/dispaySearch' render={() => searchDisplay()}/>
+          <Route exact path="/hosting" component={Host}/>
+        </div>
+     
       </div>
       
     )
   }
 }
 
-export default App;
+export default withRouter(App);

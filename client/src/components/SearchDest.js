@@ -1,11 +1,12 @@
 import React from 'react'
-import '../styles/SearchDest.css';
-import {Form, Button} from 'semantic-ui-react'
+import {Form, Button, Header} from 'semantic-ui-react'
+
 
 const SearchDest =(props) => {
+  
     return (
-        <Form className="SearchDiv" onSubmit={props.onSubmit} inverted>
-        <h1>Start your study abroad with Flat Swap</h1>
+        <Form className="SearchDiv" onSubmit={props.onSubmit}>
+        <Header as='h1'inverted size='huge' className='homePageText'>Start your study abroad with Flat Swap</Header>
         <Form.Group>
         <Form.Input icon='search' placeholder='Destination...' size='big' width='16'
          value={props.destination} onChange={props.handleChange}></Form.Input> 

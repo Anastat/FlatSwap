@@ -8,6 +8,7 @@ const app = express()
 const middleware = require('./server/utils/middleware')
 const userRouter = require('./server/controllers/users')
 const loginRouter = require('./server/controllers/login')
+const hostsRouter = require('./server/controllers/hostRouter')
 
 if ( process.env.NODE_ENV !== 'production' ) {
   require('dotenv').config()
@@ -16,7 +17,7 @@ if ( process.env.NODE_ENV !== 'production' ) {
   app.use(express.static(path.join(__dirname, 'client/build')));
   // Handle React routing, return all requests to React app
   app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client/build/index.html'));
   });
 }
 
@@ -30,11 +31,13 @@ mongoose.Promise = global.Promise
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(middleware.logger)
 
 
-app.use('/api/users', userRouter)
+app.use('/api/users', userRouter) //POST - save new user in data base GET - return list of users
 app.use('/api/login', loginRouter)
+app.use('/api/hosts', hostsRouter)
 
 app.use(middleware.error)
 
