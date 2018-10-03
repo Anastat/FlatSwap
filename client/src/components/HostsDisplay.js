@@ -6,7 +6,7 @@ class HostsDisplay extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            destination: props.destination,
+            destination: '',
             listOfHosts: props.listOfHosts,
             destinationChanged: false,
             changedList: []
@@ -78,21 +78,3 @@ class HostsDisplay extends React.Component {
     
 
 export default HostsDisplay
-
-/* <Item.Group>
-            {this.state.listOfHosts.map(host =>
-           
-           <Item key={host.id}>
-               <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-               <Item.Content>
-                   <Item.Header>{host.hostName}</Item.Header> 
-                   <Item.Meta>{host.country}, {host.town}, {host.address}</Item.Meta>
-                   <Item.Description>{host.description}</Item.Description>
-                   <Item.Extra>Home type: {host.hostType}     Rooms: {host.rooms}</Item.Extra>
-               </Item.Content>
-           </Item>
-                  
-           )}
-    
-       </Item.Group> 
-       : <Message className='messageNotFound' icon='globe' floating content='Sorry, we have no options for the chosen destination'/>*/

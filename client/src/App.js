@@ -153,9 +153,6 @@ handleSearchChange = (event) => {
 
     const searchDisplay = () => (
       <HostsDisplay listOfHosts={this.state.listFindHost}
-        onChange={this.handleSearchChange}
-        value={this.state.destination}
-        onSubmit={this.searchDest}
       />
     )
 
