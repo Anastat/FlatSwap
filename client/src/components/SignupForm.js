@@ -5,35 +5,35 @@ import {Form, Button, Segment} from 'semantic-ui-react'
 
 const SignupForm =(props) => {
         return (
-            <Segment inverted>
+            <Segment>
                 
-                <Form onSubmit = {props.handleSubmit} className='menu-item' inverted>
+                <Form onSubmit = {props.handleSubmit} className='menu-item'>
                 <h2>Sign Up</h2>
                 <Notification message={props.error}/>
                 <Form.Field>
                     <label>Email</label>
-                    <input type="email" 
+                    <input focus type="email" 
                     name="email"
                     value={props.email} 
                     onChange={props.handleChange}/>
                 </Form.Field>
                <Form.Field>
                    <label>First name</label>
-                   <input type="text" 
+                   <input focus type="text" 
                     name="firstName"
                     value={props.firstName} 
                     onChange={props.handleChange}/>
                </Form.Field>
                 <Form.Field>
                     <label>Last name</label>
-                    <input type="text" 
+                    <input focus type="text" 
                     name="lastName"
                     value={props.lastName} 
                     onChange={props.handleChange}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Password</label>
-                    <input type="password" 
+                    <input focus type="password" 
                     name="password"
                     value={props.password} 
                     onChange={props.handleChange}/>

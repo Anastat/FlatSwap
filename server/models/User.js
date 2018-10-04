@@ -26,6 +26,7 @@ userSchema.statics.format = (user) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        country: user.country,
         about: user.about,
         school: user.school,
         profilePicture: user.profilePicture
