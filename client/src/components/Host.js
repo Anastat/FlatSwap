@@ -295,9 +295,22 @@ class Host extends React.Component {
                         value={this.state.rooms} 
                         onChange={this.handleChange}/>
                     </Form.Field>
-                    <Button type="submit">
-                    Start Hosting
-                    </Button>
+                    <Route render={({ history}) => (
+                        <Button
+                        	type="submit"
+                     	    onClick={() => {
+                     	    	this.setState({
+                        			mode: "success"
+                        		}, () => {
+                        			console.log(this.state.mode)
+                            		this.renderInputField()
+                        		})
+                     	    }
+                     	    }
+                        >
+                        Start Hosting
+                        </Button>
+                     )} />
                     </Form>
                     </Segment>
                     </Grid.Column>
