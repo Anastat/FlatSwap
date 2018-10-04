@@ -194,7 +194,8 @@ handleSearchChange = (event) => {
           <Route path="/login" render={()=> loginForm()}/>
           <Route path="/signup" render={()=> signupForm()}/>
           <Route path='/dispaySearch' render={() => searchDisplay()}/>
-          <Route exact path="/hosting" component={Host}/>
+          <Route exact path="/hosting" render={({history}) => <Host history={history} user={this.state.user} mode="eligibility"/>}
+          />
         </div>
      
       </div>

@@ -27,10 +27,10 @@ html, body {
 .ui.items>.item .meta, .ui.items>.item .extra {
   color: rgb(7, 5, 134) !important;
 }
-.ui.segment, .ui.primary.segment {
-  width: 50%;
-    margin: 5% 25%;
-    height: 80%;
+.loginSignupForms {
+  width: 50% !important;
+    margin: 5% 25% !important;
+    height: 80% !important;
     background: rgba(255, 250, 250, 0.5) !important;
 }
 .displayHosts {
@@ -43,6 +43,72 @@ html, body {
 
 .messageNotFound {
   width: 80% !important;
+}
+
+.form-radio
+{
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     appearance: none;
+     display: inline-block;
+     position: relative;
+     background-color: #f1f1f1;
+     color: #666;
+     top: 10px;
+     height: 30px;
+     width: 30px;
+     border: 0;
+     border-radius: 50px;
+     cursor: pointer;     
+     margin-right: 7px;
+     outline: none;
+}
+.form-radio:checked::before
+{
+     position: absolute;
+     font: 13px/1 'Open Sans', sans-serif;
+     left: 11px;
+     top: 7px;
+     content: '\02143';
+     transform: rotate(40deg);
+}
+.form-radio:hover
+{
+     background-color: #f7f7f7;
+}
+.form-radio:checked
+{
+     background-color: #f1f1f1;
+}
+
+label
+{
+     font: 300 16px/1.7 'Open Sans', sans-serif;
+     color: #666;
+     cursor: pointer;
+}
+.box {
+	background-color: rgba(248, 247, 216, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.radio-question {
+	font: 300 16px/1.7 'Open Sans', sans-serif;
+	color: #333;
+}
+.snow-opacity {
+	background: rgba(255, 250, 250, 0.6) !important;
+}
+.host-form {
+	width: 110% !important;
+}
+.login-or-signup{
+	padding-top: 60px !important; 
+	padding-bottom: 60px !important;
+	width: 100% !important;
 }
 
 @media only screen and (max-width: 767px) {

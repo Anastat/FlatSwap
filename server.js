@@ -38,6 +38,7 @@ app.use(middleware.logger)
 app.use('/api/users', userRouter) //POST - save new user in data base GET - return list of users
 app.use('/api/login', loginRouter)
 app.use('/api/hosts', hostsRouter)
+app.use('/uploads', express.static('uploads'))
 
 app.use(middleware.error)
 

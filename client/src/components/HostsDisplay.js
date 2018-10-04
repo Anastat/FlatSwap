@@ -40,7 +40,7 @@ class HostsDisplay extends React.Component {
                    <Item.Header>{host.hostName}</Item.Header> 
                    <Item.Meta>{host.country}, {host.town}, {host.address}</Item.Meta>
                    <Item.Description>{host.description}</Item.Description>
-                   <Item.Extra>Home type: {host.hostType}     Rooms: {host.rooms}</Item.Extra>
+                   <Item.Extra>Home type: {host.hostType}, Rooms: {host.rooms}</Item.Extra>
                </Item.Content>
            </Item>
            )}
