@@ -28,9 +28,9 @@ html, body {
   color: rgb(7, 5, 134) !important;
 }
 .loginSignupForms{
-	width: 50%;
-    margin: 5% 25%;
-    height: 80%;
+	width: 50% !important;
+    margin: 5% 25% !important;
+    height: 80% !important;
     background: rgba(255, 250, 250, 0.5) !important;
 }
 .displayHosts {
