@@ -6,7 +6,7 @@ import {Button, Segment, Form} from 'semantic-ui-react'
 
 const LoginForm =(props) => {
     return (
-        <Segment>
+        <Segment className="loginSignupForms">
             <Form onSubmit={props.handleSubmit} >
                 <Notification message={props.error} />
                 <h2>Login</h2>

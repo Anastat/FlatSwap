@@ -5,7 +5,7 @@ import {Form, Button, Segment} from 'semantic-ui-react'
 
 const SignupForm =(props) => {
         return (
-            <Segment>
+            <Segment className="loginSignupForms">
                 
                 <Form onSubmit = {props.handleSubmit} className='menu-item'>
                 <h2>Sign Up</h2>

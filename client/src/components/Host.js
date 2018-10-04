@@ -81,33 +81,44 @@ class Host extends React.Component {
 	
 	
 	handleSubmit = async (event) => {
+		console.log("handleSubmit")
         event.preventDefault()
+        if (this.state.hostName!=='' && this.state.country!=='' && this.state.town!=='' && this.state.address!==''){
         try {
-            const flat = await hostService.create({
-            	hostName: this.state.hostName,
-    			hostType: this.state.hostType,
-    			country: this.state.country,
-    			town: this.state.town,
-    			address: this.state.address,
+	        const flat = await hostService.create({
+	          	hostName: this.state.hostName,
+	    		hostType: this.state.hostType,
+	   			country: this.state.country,
+	   			town: this.state.town,
+	  			address: this.state.address,
     			description: this.state.description,
     			rooms: this.state.rooms
-            })
-            this.setState({
-            	hostName: '',
-    			hostType: 'Apartment',
-    			country: '',
-    			town: '',
-    			address: '',
-    			description: '',
-    			rooms: 1
-            })
-        } catch (exeption) {
-            this.setState({error: 'something went wrong'})
-            setTimeout(() => {
-                this.setState({error: null})
-            }, 5000)
+	        })
+	        this.setState({
+	           	hostName: '',
+	    		hostType: 'Apartment',
+	    		country: '',
+	   			town: '',
+	    		address: '',
+	    		description: '',
+	    		rooms: 1,
+	    		mode: "success"
+	        })
+	        this.renderInputField
+	    } catch (exeption) {
+	        this.setState({error: 'something went wrong'})
+            setTimeout(() => {	 
+            	this.setState({error: null})
+	            }, 5000)
+	    }
+        } else {
+        	this.setState({error: 'Please fill the fields'})
+            setTimeout(() => {	 
+            	this.setState({error: null})
+	            }, 5000)
         }
     }
+    
 
     handleChange = (event) => {
     	const name = event.target.name
@@ -218,9 +229,9 @@ class Host extends React.Component {
     	            {!this.state.isHidden && this.permissionField()}
     	            
     	            <br></br><br></br>
-    	            <Button animated onClick={this.eligible}>
+    	            <Button className="button-animated" animated onClick={this.eligible}>
     	            <Button.Content visible>Next</Button.Content>
-    	            <Button.Content hidden>
+    	            <Button.Content className="button-animated" hidden>
     	              <Icon name='arrow right' />
     	            </Button.Content>
     	          </Button>
@@ -295,22 +306,7 @@ class Host extends React.Component {
                         value={this.state.rooms} 
                         onChange={this.handleChange}/>
                     </Form.Field>
-                    <Route render={({ history}) => (
-                        <Button
-                        	type="submit"
-                     	    onClick={() => {
-                     	    	this.setState({
-                        			mode: "success"
-                        		}, () => {
-                        			console.log(this.state.mode)
-                            		this.renderInputField()
-                        		})
-                     	    }
-                     	    }
-                        >
-                        Start Hosting
-                        </Button>
-                     )} />
+                    <Button type='submit'>Start Hosting</Button>
                     </Form>
                     </Segment>
                     </Grid.Column>
@@ -339,7 +335,10 @@ class Host extends React.Component {
     				<Grid.Column>
     				<Segment className="snow-opacity">
     				<div className="radio-question">
+    				<h2>Congratulations!</h2>
+    				<div className="radio-question">
     				Your apartment is now available to be swapped.
+    				</div>
     				</div>
     				</Segment>
                     </Grid.Column>
