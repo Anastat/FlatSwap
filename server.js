@@ -10,9 +10,15 @@ const userRouter = require('./server/controllers/users')
 const loginRouter = require('./server/controllers/login')
 const hostsRouter = require('./server/controllers/hostRouter')
 
+const proxy = require('http-proxy-middleware');
+
+module.exports = function(app) {
+  app.use(proxy('/api', { target: 'http://localhost:5000/' }));
+};
+
 if ( process.env.NODE_ENV !== 'production' ) {
   require('dotenv').config()
-} else if (process.env.NODE_ENV === 'production') {
+} else {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
   // Handle React routing, return all requests to React app
