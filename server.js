@@ -10,20 +10,7 @@ const userRouter = require('./server/controllers/users')
 const loginRouter = require('./server/controllers/login')
 const hostsRouter = require('./server/controllers/hostRouter')
 
-
-
-if ( process.env.NODE_ENV !== 'production' ) {
-  require('dotenv').config()
-} else {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname+ '/client/build/index.html'));
-  });
-}
-
-const port = process.env.PORT || 5000;
+const port = process.env.PORT
 const mongoUrl = process.env.MONGODB_URI
 
 
@@ -33,6 +20,7 @@ mongoose.Promise = global.Promise
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(express.static('build'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(middleware.logger)
 
@@ -44,6 +32,10 @@ app.use('/api/hosts', hostsRouter)
 app.use(middleware.error)
 
 const server = http.createServer(app)
+
+if ( process.env.NODE_ENV !== 'production' ) {
+  require('dotenv').config()
+} 
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
