@@ -13,6 +13,7 @@ const hostsRouter = require('./server/controllers/hostRouter')
 if ( process.env.NODE_ENV !== 'production' ) {
   require('dotenv').config()
 } else if (process.env.NODE_ENV === 'production') {
+  console.log('Production')
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
   // Handle React routing, return all requests to React app
