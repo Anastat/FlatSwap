@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {Route, NavLink, withRouter} from "react-router-dom";
 import Host from "./components/Host";
-import Header from './components/Header'
+import './styles/Header.css';
 import logo from './images/flatSwap_logo.png'
 import SearchDestination from './components/SearchDest'
 import SignupForm from './components/SignupForm'
