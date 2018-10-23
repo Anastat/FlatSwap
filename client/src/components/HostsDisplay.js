@@ -13,6 +13,7 @@ class HostsDisplay extends React.Component {
         }
     }
 
+
     handleSearchChange = (event) => {
         this.setState({ destination: event.target.value });
       };
@@ -63,8 +64,8 @@ class HostsDisplay extends React.Component {
                 </Grid.Column>
                 <Grid.Column width={12}>
                 <div className='displayHosts'>
-        {this.state.destinationChanged ? 
-                displayLIst(this.state.changedList) :
+        {this.state.destinationChanged  ? this.state.changedList.length ?
+                displayLIst(this.state.changedList) : <span>Loading ...</span> :
                 displayLIst(this.state.listOfHosts)
           }
        
