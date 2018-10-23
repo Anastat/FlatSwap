@@ -32,7 +32,7 @@ class HostsDisplay extends React.Component {
         const displayLIst = (list) => (
             list.length>0 ? 
             <Item.Group>
-            {list.map(host =>
+            {list.map(host => (
            
            <Item key={host.id}>
                <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
@@ -43,7 +43,7 @@ class HostsDisplay extends React.Component {
                    <Item.Extra>Home type: {host.hostType}, Rooms: {host.rooms}</Item.Extra>
                </Item.Content>
            </Item>
-           )}
+           ))}
     
            </Item.Group> : <Message className='messageNotFound' icon='globe' floating content='Sorry, we have no options for the chosen destination'/>
         )
