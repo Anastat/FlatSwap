@@ -28,6 +28,7 @@ const mongoUrl = process.env.MONGODB_URI
 
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true })
+console.log(mongoUrl)
 mongoose.Promise = global.Promise
 
 app.use(cors())
