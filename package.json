@@ -2,6 +2,7 @@
   "name": "flatswap",
   "version": "1.0.0",
   "main": "server.js",
+  "homepage": "https://flat-swap.herokuapp.com",
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js --ignore client",
@@ -37,8 +38,8 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "^2.0.5",
     "redux": "^4.0.0",
-    "semantic-ui-react": "^0.82.5",
-    "serve": "^10.0.2"
+    "serve": "^10.0.2",
+    "semantic-ui-react": "^0.82.5"
   },
   "devDependencies": {
     "concurrently": "^3.6.1"
