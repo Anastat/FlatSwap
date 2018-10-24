@@ -2,7 +2,7 @@
   "name": "flatswap",
   "version": "1.0.0",
   "main": "server.js",
-  "homepage": "https://flat-swap.herokuapp.com",
+  "homepage": "https://flat-swap.herokuapp.com/api",
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js --ignore client",
