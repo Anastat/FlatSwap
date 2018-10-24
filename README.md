@@ -15,7 +15,7 @@ Additional packages are used:
 
 
 ToDo list:
-- upload picture for host/user
+- upload image for host/user
 - change/add user information
 - change/delete host
-- displaying single host information
+- display information about single host

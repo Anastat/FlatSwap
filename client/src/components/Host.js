@@ -356,7 +356,7 @@ class Host extends React.Component {
     	} else {
     		return(
     				
-    				<Grid centered columns={5}>
+    				<Grid style={{paddingTop: '80px'}} centered columns={5}>
     				<Grid.Column>
     				<Segment className="login-or-signup snow-opacity" >
     			    <LoginButton/>
