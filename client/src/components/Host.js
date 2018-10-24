@@ -96,8 +96,7 @@ class Host extends React.Component {
 
     			description: this.state.description,
 				rooms: this.state.rooms})
-			
-            await hostService.create({formData})
+		
 	        this.setState({
 	           	hostName: '',
 	    		hostType: 'Apartment',
