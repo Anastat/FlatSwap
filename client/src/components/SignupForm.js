@@ -5,14 +5,14 @@ import {Form, Button, Segment} from 'semantic-ui-react'
 
 const SignupForm =(props) => {
         return (
+
             <Segment className="loginSignupForms">
-                
                 <Form onSubmit = {props.handleSubmit} className='menu-item'>
                 <h2>Sign Up</h2>
                 <Notification message={props.error}/>
                 <Form.Field>
                     <label>Email</label>
-                    <input focus type="email" 
+                    <Form.Input focus error type="email" 
                     name="email"
                     value={props.email} 
                     onChange={props.handleChange}/>

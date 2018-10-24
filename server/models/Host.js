@@ -9,7 +9,8 @@ const hostSchema = new mongoose.Schema({
     description: String,
     rooms: Number,
     hostImg: {
-        type: Buffer,
+        data: Buffer,
+        ontentType: String,
         default: ''}
 })
 

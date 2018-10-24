@@ -13,10 +13,15 @@ const hostsRouter = require('./server/controllers/hostRouter')
 if ( process.env.NODE_ENV !== 'production' ) {
   require('dotenv').config()
 } else if (process.env.NODE_ENV === 'production') {
+  console.log('Production')
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
   // Handle React routing, return all requests to React app
+<<<<<<< HEAD
   /*app.get('*', function(req, res) {
+=======
+  /*app.get('/*', function(req, res) {
+>>>>>>> 8f3160b7490feb8a0fd9fb810078b8ace09ad557
     res.sendFile(path.join(__dirname, 'client/build/index.html'));
   });*/
 }
@@ -38,6 +43,7 @@ app.use(middleware.logger)
 app.use('/api/users', userRouter) //POST - save new user in data base GET - return list of users
 app.use('/api/login', loginRouter)
 app.use('/api/hosts', hostsRouter)
+app.use('/uploads', express.static('uploads'))
 
 app.use(middleware.error)
 
