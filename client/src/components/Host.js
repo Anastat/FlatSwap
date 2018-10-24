@@ -85,7 +85,7 @@ class Host extends React.Component {
         event.preventDefault()
         if (this.state.hostName!=='' && this.state.country!=='' && this.state.town!=='' && this.state.address!==''){
         try {
-	        const flat = await hostService.create({
+	            await hostService.create({
 	          	hostName: this.state.hostName,
 	    		hostType: this.state.hostType,
 	   			country: this.state.country,
