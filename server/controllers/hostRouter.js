@@ -60,7 +60,7 @@ hostRouter.delete('/:id', async (request, response) => {
 hostRouter.post('/',  upload.single('hostImg'), async (request, response, next) => {
     
     const body = request.body
-    console.log(request.file)
+    //console.log(request.file)
     try {
         const host = new Host ({
             hostName: body.hostName,
@@ -70,7 +70,7 @@ hostRouter.post('/',  upload.single('hostImg'), async (request, response, next) 
             address: body.address,
             description: body.description,
             rooms: body.rooms,
-            hostImg: request.file.path
+            //hostImg: request.file.path
         })
         const savedHost = await host.save()
         response.json(Host.format(savedHost))
