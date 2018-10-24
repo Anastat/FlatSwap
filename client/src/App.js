@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {Route, NavLink, withRouter} from "react-router-dom";
 import Host from "./components/Host";
-import Header from './components/Header'
+import './styles/Header.css';
 import logo from './images/flatSwap_logo.png'
 import SearchDestination from './components/SearchDest'
 import SignupForm from './components/SignupForm'
@@ -192,8 +192,8 @@ handleSearchChange = (event) => {
           <Route path="/login" render={()=> loginForm()}/>
           <Route path="/signup" render={()=> signupForm()}/>
           <Route path='/dispaySearch' render={() => searchDisplay()}/>
-          <Route exact path="/hosting" render={({history}) =>
-  		<Host history={history} user={this.state.user} mode="eligibility"/>}
+          <Route exact path="/hosting" render={({history}) => <Host history={history} user={this.state.user} mode="eligibility"/>}
+
           />
         </div>
 </div>

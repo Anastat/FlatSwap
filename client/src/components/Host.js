@@ -56,6 +56,7 @@ class Host extends React.Component {
 			town: '',
 			address: '',
 			description: '',
+
 			rooms: 1
 		}
 		this._handleRadio = this._handleRadio.bind(this);
@@ -85,15 +86,17 @@ class Host extends React.Component {
         event.preventDefault()
         if (this.state.hostName!=='' && this.state.country!=='' && this.state.town!=='' && this.state.address!==''){
         try {
-	        const flat = await hostService.create({
-	          	hostName: this.state.hostName,
-	    		hostType: this.state.hostType,
-	   			country: this.state.country,
-	   			town: this.state.town,
-	  			address: this.state.address,
+	       let formData = new FormData();
+			formData.append('file', this.state.hostImg)
+			formData.append({hostName: this.state.hostName,
+    			hostType: this.state.hostType,
+    			country: this.state.country,
+    			town: this.state.town,
+    			address: this.state.address,
     			description: this.state.description,
-    			rooms: this.state.rooms
-	        })
+				rooms: this.state.rooms})
+			
+            await hostService.create({formData})
 	        this.setState({
 	           	hostName: '',
 	    		hostType: 'Apartment',
@@ -139,7 +142,11 @@ class Host extends React.Component {
     	            this.toggleHidden(this.state.ownership)
     	    	}
     		})
-    }
+	}
+	fileSelectedHandler = (event) => {
+		this.setState({hostImg: event.target.files[0]})
+	}
+
     permissionField() {
     	const { permission } = this.state;
 	    console.log(permission, true);
@@ -198,6 +205,7 @@ class Host extends React.Component {
     	    
     	    return (
     	    		<div>
+
     	    		<Grid style={{padding: '80px'}} centered columns={3}>
     				<Grid.Column>
     				<Segment className="host-form snow-opacity">
@@ -229,6 +237,7 @@ class Host extends React.Component {
     	            {!this.state.isHidden && this.permissionField()}
     	            
     	            <br></br><br></br>
+
     	            <Button className="button-animated" animated onClick={this.eligible}>
     	            <Button.Content visible>Next</Button.Content>
     	            <Button.Content className="button-animated" hidden>
@@ -243,6 +252,7 @@ class Host extends React.Component {
     	} else if (this.state.mode === "basicInfo") {
     		return (
     				<div>
+
     				<Grid style={{padding: '80px'}} centered columns={2}>
     				<Grid.Column>
     				<Segment className="host-form snow-opacity">
@@ -256,6 +266,7 @@ class Host extends React.Component {
                         value={this.state.hostName} 
                         onChange={this.handleChange}/>
                     </Form.Field>
+					<Form.Group widths='equal'>
                     <Form.Field>
                         <label>Flat type</label>
                         <label>		
@@ -274,6 +285,13 @@ class Host extends React.Component {
         	            	onChange={this.handleChange}/> Room
         	            </label>
                     </Form.Field>
+					<Form.Field >
+						<label>Images</label>
+						<input type='file' name='hostImg' onChange={this.fileSelectedHandler}></input>
+					</Form.Field>
+
+					</Form.Group>
+
                     <Form.Group widths='equal'>
                     <Form.Field>
                         <label>Country</label>

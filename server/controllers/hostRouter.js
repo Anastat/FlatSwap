@@ -1,5 +1,16 @@
 const hostRouter = require('express').Router()
 const Host = require('../models/Host')
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+    destination: function(request, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function(request, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+const upload = multer({storage: storage})
 
 hostRouter.get('/', async (request, response) => {
     const hosts = await Host.find({})
@@ -46,8 +57,10 @@ hostRouter.delete('/:id', async (request, response) => {
     }
 })
 
-hostRouter.post('/', async (request, response) => {
+hostRouter.post('/',  upload.single('hostImg'), async (request, response, next) => {
+    
     const body = request.body
+    console.log(request.file)
     try {
         const host = new Host ({
             hostName: body.hostName,
@@ -57,7 +70,7 @@ hostRouter.post('/', async (request, response) => {
             address: body.address,
             description: body.description,
             rooms: body.rooms,
-            //hostImg: body.hostImg
+            hostImg: request.file.path
         })
         const savedHost = await host.save()
         response.json(Host.format(savedHost))

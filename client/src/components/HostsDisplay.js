@@ -13,6 +13,7 @@ class HostsDisplay extends React.Component {
         }
     }
 
+
     handleSearchChange = (event) => {
         this.setState({ destination: event.target.value });
       };
@@ -21,6 +22,7 @@ class HostsDisplay extends React.Component {
         event.preventDefault()
         try {
           const list = await hostsService.getDestination(this.state.destination)
+          console.log(list)
           this.setState({destination: '', changedList: list, destinationChanged: true})
         } catch (exeption){
          console.log(exeption)
@@ -32,7 +34,7 @@ class HostsDisplay extends React.Component {
         const displayLIst = (list) => (
             list.length>0 ? 
             <Item.Group>
-            {list.map(host =>
+            {list.map(host => (
            
            <Item key={host.id}>
                <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
@@ -40,10 +42,10 @@ class HostsDisplay extends React.Component {
                    <Item.Header>{host.hostName}</Item.Header> 
                    <Item.Meta>{host.country}, {host.town}, {host.address}</Item.Meta>
                    <Item.Description>{host.description}</Item.Description>
-                   <Item.Extra>Home type: {host.hostType}     Rooms: {host.rooms}</Item.Extra>
+                   <Item.Extra>Home type: {host.hostType}, Rooms: {host.rooms}</Item.Extra>
                </Item.Content>
            </Item>
-           )}
+           ))}
     
            </Item.Group> : <Message className='messageNotFound' icon='globe' floating content='Sorry, we have no options for the chosen destination'/>
         )
@@ -62,8 +64,8 @@ class HostsDisplay extends React.Component {
                 </Grid.Column>
                 <Grid.Column width={12}>
                 <div className='displayHosts'>
-        {this.state.destinationChanged ? 
-                displayLIst(this.state.changedList) :
+        {this.state.destinationChanged  ? this.state.changedList.length ?
+                displayLIst(this.state.changedList) : <span>Loading ...</span> :
                 displayLIst(this.state.listOfHosts)
           }
        
