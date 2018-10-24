@@ -156,7 +156,6 @@ handleSearchChange = (event) => {
       />
     )
 
-   
     return (
       <div>
       
@@ -189,16 +188,15 @@ handleSearchChange = (event) => {
       
       </Menu>
         
-
           <Route exact path="/" render={() => searchDestination()}/>         
           <Route path="/login" render={()=> loginForm()}/>
           <Route path="/signup" render={()=> signupForm()}/>
           <Route path='/dispaySearch' render={() => searchDisplay()}/>
           <Route exact path="/hosting" render={({history}) => <Host history={history} user={this.state.user} mode="eligibility"/>}
+
           />
         </div>
-     
-      </div>
+</div>
       
     )
   }

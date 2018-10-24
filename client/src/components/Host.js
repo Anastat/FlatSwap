@@ -56,8 +56,8 @@ class Host extends React.Component {
 			town: '',
 			address: '',
 			description: '',
-			rooms: 1,
-			hostImg: null
+
+			rooms: 1
 		}
 		this._handleRadio = this._handleRadio.bind(this);
 		this.eligible = this.eligible.bind(this);
@@ -82,9 +82,11 @@ class Host extends React.Component {
 	
 	
 	handleSubmit = async (event) => {
+		console.log("handleSubmit")
         event.preventDefault()
+        if (this.state.hostName!=='' && this.state.country!=='' && this.state.town!=='' && this.state.address!==''){
         try {
-			let formData = new FormData();
+	       let formData = new FormData();
 			formData.append('file', this.state.hostImg)
 			formData.append({hostName: this.state.hostName,
     			hostType: this.state.hostType,
@@ -95,23 +97,31 @@ class Host extends React.Component {
 				rooms: this.state.rooms})
 			
             await hostService.create({formData})
-            this.setState({
-            	hostName: '',
-    			hostType: 'Apartment',
-    			country: '',
-    			town: '',
-    			address: '',
-    			description: '',
-				rooms: 1,
-				hostImg: null
-            })
-        } catch (exeption) {
-            this.setState({error: 'something went wrong'})
-            setTimeout(() => {
-                this.setState({error: null})
-            }, 5000)
+	        this.setState({
+	           	hostName: '',
+	    		hostType: 'Apartment',
+	    		country: '',
+	   			town: '',
+	    		address: '',
+	    		description: '',
+	    		rooms: 1,
+	    		mode: "success"
+	        })
+	        this.renderInputField
+	    } catch (exeption) {
+	        this.setState({error: 'something went wrong'})
+            setTimeout(() => {	 
+            	this.setState({error: null})
+	            }, 5000)
+	    }
+        } else {
+        	this.setState({error: 'Please fill the fields'})
+            setTimeout(() => {	 
+            	this.setState({error: null})
+	            }, 5000)
         }
     }
+    
 
     handleChange = (event) => {
     	const name = event.target.name
@@ -195,7 +205,8 @@ class Host extends React.Component {
     	    
     	    return (
     	    		<div>
-    	    		<Grid  centered columns={3}>
+
+    	    		<Grid style={{padding: '80px'}} centered columns={3}>
     				<Grid.Column>
     				<Segment className="host-form snow-opacity">
     	            <Notification message={this.state.error}/>
@@ -226,9 +237,10 @@ class Host extends React.Component {
     	            {!this.state.isHidden && this.permissionField()}
     	            
     	            <br></br><br></br>
-    	            <Button animated onClick={this.eligible}>
+
+    	            <Button className="button-animated" animated onClick={this.eligible}>
     	            <Button.Content visible>Next</Button.Content>
-    	            <Button.Content hidden>
+    	            <Button.Content className="button-animated" hidden>
     	              <Icon name='arrow right' />
     	            </Button.Content>
     	          </Button>
@@ -240,7 +252,8 @@ class Host extends React.Component {
     	} else if (this.state.mode === "basicInfo") {
     		return (
     				<div>
-    				<Grid  centered columns={2}>
+
+    				<Grid style={{padding: '80px'}} centered columns={2}>
     				<Grid.Column>
     				<Segment className="host-form snow-opacity">
     				<Form onSubmit = {this.handleSubmit}>
@@ -254,7 +267,7 @@ class Host extends React.Component {
                         onChange={this.handleChange}/>
                     </Form.Field>
 					<Form.Group widths='equal'>
-					<Form.Field >
+                    <Form.Field>
                         <label>Flat type</label>
                         <label>		
         	            <input 
@@ -278,7 +291,7 @@ class Host extends React.Component {
 					</Form.Field>
 
 					</Form.Group>
-                    
+
                     <Form.Group widths='equal'>
                     <Form.Field>
                         <label>Country</label>
@@ -311,9 +324,7 @@ class Host extends React.Component {
                         value={this.state.rooms} 
                         onChange={this.handleChange}/>
                     </Form.Field>
-                    <Button type="submit">
-                    Start Hosting
-                    </Button>
+                    <Button type='submit'>Start Hosting</Button>
                     </Form>
                     </Segment>
                     </Grid.Column>
@@ -342,7 +353,10 @@ class Host extends React.Component {
     				<Grid.Column>
     				<Segment className="snow-opacity">
     				<div className="radio-question">
+    				<h2>Congratulations!</h2>
+    				<div className="radio-question">
     				Your apartment is now available to be swapped.
+    				</div>
     				</div>
     				</Segment>
                     </Grid.Column>
