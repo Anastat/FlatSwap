@@ -22,7 +22,7 @@ class HostsDisplay extends React.Component {
         event.preventDefault()
         try {
           const list = await hostsService.getDestination(this.state.destination)
-          console.log(list)
+          //console.log(list)
           this.setState({destination: '', changedList: list, destinationChanged: true})
         } catch (exeption){
          console.log(exeption)
