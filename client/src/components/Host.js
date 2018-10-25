@@ -86,17 +86,9 @@ class Host extends React.Component {
         event.preventDefault()
         if (this.state.hostName!=='' && this.state.country!=='' && this.state.town!=='' && this.state.address!==''){
         try {
-	       let formData = new FormData();
-			formData.append('file', this.state.hostImg)
-			formData.append({hostName: this.state.hostName,
-    			hostType: this.state.hostType,
-    			country: this.state.country,
-    			town: this.state.town,
-    			address: this.state.address,
-    			description: this.state.description,
-				rooms: this.state.rooms})
-			
-            await hostService.create({formData})
+	       let formData = new FormData(event.target);
+			//formData.append('file', this.state.hostImg)
+            await hostService.create(formData)
 	        this.setState({
 	           	hostName: '',
 	    		hostType: 'Apartment',
@@ -107,7 +99,7 @@ class Host extends React.Component {
 	    		rooms: 1,
 	    		mode: "success"
 	        })
-	        this.renderInputField
+	        this.renderInputField()
 	    } catch (exeption) {
 	        this.setState({error: 'something went wrong'})
             setTimeout(() => {	 
@@ -124,11 +116,11 @@ class Host extends React.Component {
     
 
     handleChange = (event) => {
-    	const name = event.target.name
-    	const value = event.target.value
-    	console.log("event.target.name: ", name, " event.target.value: ", value)
+    	//const name = event.target.name
+    	//const value = event.target.value
+    	//console.log("event.target.name: ", name, " event.target.value: ", value)
         this.setState({[event.target.name]: event.target.value})
-        console.log(this.state.hostName, this.state.hostType, this.state.country, this.state.description)
+        //console.log(this.state.hostName, this.state.hostType, this.state.country, this.state.description)
     }
 
     _handleRadio(event) {
@@ -178,13 +170,13 @@ class Host extends React.Component {
     )
     }
     eligible() {
-    	console.log("here")
+    	//console.log("here")
     	if (this.state.ownership || this.state.permission) {
     		//need to make sure it sets state before calling renderinputfield
     		this.setState({
     			mode: "basicInfo"
     		}, () => {
-    			console.log(this.state.mode)
+    			//console.log(this.state.mode)
         		this.renderInputField()
     		})
     		
@@ -192,7 +184,7 @@ class Host extends React.Component {
     		this.setState({
     			mode: "notEligible"
     		}, () => {
-    			console.log(this.state.mode)
+    			//console.log(this.state.mode)
         		this.renderInputField()
     		})
     	}
@@ -201,7 +193,7 @@ class Host extends React.Component {
     renderInputField() {
     	if (this.state.mode === "eligibility") {
     		const { ownership } = this.state;
-    	    console.log(ownership, true);
+    	    //console.log(ownership, true);
     	    
     	    return (
     	    		<div>
@@ -253,7 +245,7 @@ class Host extends React.Component {
     		return (
     				<div>
 
-    				<Grid style={{padding: '80px'}} centered columns={2}>
+    				<Grid centered columns={2}>
     				<Grid.Column>
     				<Segment className="host-form snow-opacity">
     				<Form onSubmit = {this.handleSubmit}>

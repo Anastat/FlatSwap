@@ -19,6 +19,7 @@ const getDestination = (destination) => {
 }
 
 const create = async (newObject) => {
+    console.log(newObject)
     const response = await axios.post(baseUrl, newObject)
     return response.data
 }
