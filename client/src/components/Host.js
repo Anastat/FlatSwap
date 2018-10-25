@@ -66,7 +66,7 @@ class Host extends React.Component {
 		this.setState({
 			mode: "success"
 		}, () => {
-			console.log(this.state.mode)
+			//console.log(this.state.mode)
     		this.renderInputField()
 		})
 	}
@@ -87,7 +87,9 @@ class Host extends React.Component {
         try {
 	       let formData = new FormData(event.target);
           await hostService.create(formData)
-	        this.setState({
+		
+		
+	  this.setState({
 	           	hostName: '',
 	    		hostType: 'Apartment',
 	    		country: '',
@@ -127,15 +129,15 @@ class Host extends React.Component {
     	this.setState({
     		[event.target.name]: isTrue
     		}, () => {
-    			console.log('handle', isTrue, 'target:', targetName, 'value:', );
+    			//console.log('handle', isTrue, 'target:', targetName, 'value:', );
     			if (targetName === 'ownership') {
     	            this.toggleHidden(this.state.ownership)
     	    	}
     		})
     }
     permissionField() {
-    	const { permission } = this.state;
-	    console.log(permission, true);
+    	//const { permission } = this.state;
+	    //console.log(permission, true);
     	return (
     	  <div>
     		<br></br>
@@ -247,6 +249,7 @@ class Host extends React.Component {
                         value={this.state.hostName} 
                         onChange={this.handleChange}/>
                     </Form.Field>
+					<Form.Group widths='equal'>
                     <Form.Field>
                         <label>Flat type</label>
                         <label>		
@@ -265,6 +268,11 @@ class Host extends React.Component {
         	            	onChange={this.handleChange}/> Room
         	            </label>
                     </Form.Field>
+					<Form.Field >
+						<label>Images</label>
+						<input type='file' name='hostImg' onChange={this.fileSelectedHandler}></input>
+					</Form.Field>
+					</Form.Group>
                     <Form.Group widths='equal'>
                     <Form.Field>
                         <label>Country</label>

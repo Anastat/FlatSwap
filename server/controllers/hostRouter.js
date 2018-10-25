@@ -70,7 +70,7 @@ hostRouter.post('/',  upload.single('hostImg'), async (request, response, next) 
             address: body.address,
             description: body.description,
             rooms: body.rooms,
-            //hostImg: request.file.path
+            hostImg: request.file.path
         })
         const savedHost = await host.save()
         response.json(Host.format(savedHost))
