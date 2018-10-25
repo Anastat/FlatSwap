@@ -36,7 +36,7 @@ class HostsDisplay extends React.Component {
             <Item.Group>
             {list.map(host => {
            let image = host.hostImg !== '' ? `../../../${host.hostImg}` : '../../../uploads/image.png'
-           console.log(image)
+           //console.log(image)
            return (
            <Item key={host.id}>
                <Item.Image src={image} />
