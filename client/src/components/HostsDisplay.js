@@ -34,10 +34,12 @@ class HostsDisplay extends React.Component {
         const displayLIst = (list) => (
             list.length>0 ? 
             <Item.Group>
-            {list.map(host => (
-           
+            {list.map(host => {
+           let image = host.hostImg !== '' ? `../../../${host.hostImg}` : '../../../uploads/image.png'
+           console.log(image)
+           return (
            <Item key={host.id}>
-               <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+               <Item.Image src={image} />
                <Item.Content>
                    <Item.Header>{host.hostName}</Item.Header> 
                    <Item.Meta>{host.country}, {host.town}, {host.address}</Item.Meta>
@@ -45,7 +47,7 @@ class HostsDisplay extends React.Component {
                    <Item.Extra>Home type: {host.hostType}, Rooms: {host.rooms}</Item.Extra>
                </Item.Content>
            </Item>
-           ))}
+           )})}
     
            </Item.Group> : <Message className='messageNotFound' icon='globe' floating content='Sorry, we have no options for the chosen destination'/>
         )

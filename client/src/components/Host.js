@@ -85,15 +85,8 @@ class Host extends React.Component {
         event.preventDefault()
         if (this.state.hostName!=='' && this.state.country!=='' && this.state.town!=='' && this.state.address!==''){
         try {
-	            await hostService.create({
-	          	hostName: this.state.hostName,
-	    		hostType: this.state.hostType,
-	   			country: this.state.country,
-	   			town: this.state.town,
-	  			address: this.state.address,
-    			description: this.state.description,
-    			rooms: this.state.rooms
-	        })
+	       let formData = new FormData(event.target);
+          await hostService.create(formData)
 	        this.setState({
 	           	hostName: '',
 	    		hostType: 'Apartment',
@@ -183,7 +176,7 @@ class Host extends React.Component {
     		this.setState({
     			mode: "notEligible"
     		}, () => {
-    			console.log(this.state.mode)
+    			//console.log(this.state.mode)
         		this.renderInputField()
     		})
     	}
@@ -191,6 +184,7 @@ class Host extends React.Component {
     
     renderInputField() {
     	if (this.state.mode === "eligibility") {
+
     		const { ownership } = this.state; 
     	    return (
     	    		<div>
@@ -239,6 +233,7 @@ class Host extends React.Component {
     	} else if (this.state.mode === "basicInfo") {
     		return (
     				<div>
+
     				<Grid centered columns={2}>
     				<Grid.Column>
     				<Segment className="host-form snow-opacity">
@@ -354,8 +349,7 @@ class Host extends React.Component {
 	    		
         )
     	} else {
-    		return(
-    				
+    		return(   				
     				<Grid style={{paddingTop: '80px'}} centered columns={5}>
     				<Grid.Column>
     				<Segment className="login-or-signup snow-opacity" >
@@ -364,9 +358,7 @@ class Host extends React.Component {
     			    <SignUpButton/>
     			     </Segment>
     			    </Grid.Column>
-    			  </Grid>
-    			  
-    			  
+    			  </Grid> 			  
     		)
     	}
         
